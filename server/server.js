@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const api = require('./routes/api');
 const Pusher = require('pusher');
+const assert = require("assert");
 
 const pusher = new Pusher({
   appId: process.env.appId,
@@ -27,6 +28,19 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api', api);
+
+/*
+Modify Change Stream Output using Aggregation Pipelines
+You can control change stream output by providing an array of one or more of the following pipeline stages when configuring the change stream:
+$match, $project, $addFields, $replaceRoot, $redact
+See Change Events for more information on the change stream response document format.
+https://docs.mongodb.com/manual/reference/change-events/#change-stream-output
+*/
+const pipeline = [
+  {
+    $project: { documentKey: false }
+  }
+];
 
 mongoose.connect('mongodb://localhost/tasksdb?replicaSet=rs0');
 
