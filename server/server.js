@@ -1,3 +1,5 @@
+
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -5,10 +7,10 @@ const api = require('./routes/api');
 const Pusher = require('pusher');
 
 const pusher = new Pusher({
-  appId: '596248',
-  key: '387fa099d2fd683065e2',
-  secret: '7718014b808e397465e7',
-  cluster: 'us2',
+  appId: process.env.appId,
+  key: process.env.key,
+  secret: process.env.secret,
+  cluster: process.env.cluster,
   encrypted: true,
 });
 const channel = 'tasks';
@@ -26,7 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api', api);
 
-mongoose.connect('mongodb://localhost/tasksdb?replicaSet=rs');
+mongoose.connect('mongodb://localhost/tasksdb?replicaSet=rs0');
 
 const db = mongoose.connection;
 
