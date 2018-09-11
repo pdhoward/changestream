@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:watch": "nodemon server.js",
+    "bootstrap": "cp env.sample .env",
+    "test -u": "jest -u",
+    "test": "jest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "machine": "node ./server.js"
   },
   "keywords": [],
   "author": "",
@@ -13,9 +19,69 @@
   "dependencies": {
     "assert": "^1.4.1",
     "body-parser": "^1.18.3",
-    "dotenv": "^6.0.0",
+    "babel-preset-env": "^1.7.0",
+    "babelify": "^8.0.0",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
+    "botkit": "^0.6.16",
+    "cfenv": "^1.1.0",
+    "chalk": "^2.4.1",
+    "chart.js": "^2.7.2",
+    "cli-table2": "^0.2.0",
+    "contentful": "^6.1.2",
+    "cors": "^2.8.4",
+    "csvtojson": "^2.0.7",
+    "dotenv": "^4.0.0",
     "express": "^4.16.3",
-    "mongoose": "^5.1.2",
-    "pusher": "^2.0.0"
-  }
+    "express-browserify": "^1.0.2",
+    "express-react-views": "^0.10.2",
+    "g": "^2.0.1",
+    "help": "^3.0.2",
+    "moment": "^2.22.2",
+    "mongoose": "^5.2.9",
+    "natural": "^0.6.1",
+    "nodemailer": "^4.6.7",
+    "npm-check-updates": "^2.14.2",
+    "parse5": "^4.0.0",
+    "prop-types": "^15.6.2",
+    "query-string": "^5.1.1",
+    "react": "^15.5.0",
+    "react-chartjs-2": "^2.7.4",
+    "react-dom": "^15.5.0",
+    "react-scrollbar": "^0.5.4",
+    "react-tagcloud": "^1.2.1",
+    "semantic-ui-react": "^0.77.1",
+    "serve-favicon": "^2.5.0",
+    "sort-by": "^1.2.0",
+    "twilio": "^3.19.1",
+    "uglifyify": "^4.0.5",
+    "vcap_services": "^0.3.4",
+    "watson-developer-cloud": "^3.7.0"
+},
+"engines": {
+  "node": "9.11.2"
+},
+"babel": {
+  "presets": [
+    "env",
+    "react"
+  ],
+  "ignore": "node_modules"
+},
+"devDependencies": {
+  "dezalgo": "~1.0",
+  "enzyme": "^3.2.0",
+  "eslint": "^4.19.1",
+  "eslint-config-standard": "^11.0.0",
+  "eslint-plugin-import": "^2.13.0",
+  "eslint-plugin-node": "^5.2.1",
+  "eslint-plugin-promise": "^3.8.0",
+  "eslint-plugin-react": "^7.10.0",
+  "eslint-plugin-standard": "^3.1.0",
+  "jest": "^22.4.4",
+  "jest-cli": "^22.4.4",
+  "nodemon": "^1.18.3",
+  "react-test-renderer": "^15.5.0"
 }
+}
+  
