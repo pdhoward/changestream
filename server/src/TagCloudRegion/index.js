@@ -1,18 +1,3 @@
-/**
- * Copyright 2017 IBM Corp. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the 'License'); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an 'AS IS' BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -22,14 +7,6 @@ const utils = require('../../lib/utils');
 
 var _gDoUpdate = true;    // determines if we render update or not
 
-/**
- * This object renders a tag cloud object that appears in the right column
- * of the home page. It contains selectable terms that the user can use
- * to filter the match list. It is essentially like the filter objects, but
- * in a different format. It comes with a drop down menu where the user can
- * select what filter (entities, categories, concepts, keywords, or entity
- * types) values to display in the cloud.
- */
 export default class TagCloudRegion extends React.Component {
   constructor(...props) {
     super(...props);
@@ -44,10 +21,6 @@ export default class TagCloudRegion extends React.Component {
     };
   }
 
-  /**
-   * getTagCloudItems - return all values associated with the selected
-   * filter type.
-   */
   getTagCloudItems() {
     const {
       tagCloudType,
@@ -61,15 +34,15 @@ export default class TagCloudRegion extends React.Component {
     // console.log('tagCloudType: ' + tagCloudType);
     var oldArray = [];
     if (tagCloudType === utils.CATEGORY_FILTER) {
-      oldArray = JSON.parse(JSON.stringify(categories.results));
+      oldArray = JSON.parse(JSON.stringify({ "msg": "life is good" }));
     } else if (tagCloudType === utils.CONCEPT_FILTER) {
-      oldArray = JSON.parse(JSON.stringify(concepts.results));
+      oldArray = JSON.parse(JSON.stringify({ "msg": "life is good" }));
     } else if (tagCloudType === utils.KEYWORD_FILTER) {
-      oldArray = JSON.parse(JSON.stringify(keywords.results));
+      oldArray = JSON.parse(JSON.stringify({ "msg": "life is good" }));
     } else if (tagCloudType === utils.ENTITY_FILTER) {
-      oldArray = JSON.parse(JSON.stringify(entities.results));
+      oldArray = JSON.parse(JSON.stringify({"msg": "life is good"}));
     } else if (tagCloudType === utils.ENTITY_TYPE_FILTER) {
-      oldArray = JSON.parse(JSON.stringify(entityTypes.results));
+      oldArray = JSON.parse(JSON.stringify({ "msg": "life is good" }));
     }
 
     // the values are taken from a collection that contains 'number
@@ -236,6 +209,5 @@ TagCloudRegion.propTypes = {
   keywords: PropTypes.object,
   entityTypes: PropTypes.object,
   tagCloudSelection: PropTypes.string,
-  tagCloudType: PropTypes.string,
-  onTagItemSelected: PropTypes.func.isRequired,
-};
+  tagCloudType: PropTypes.string
+ };

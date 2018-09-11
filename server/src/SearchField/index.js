@@ -105,9 +105,7 @@ export default class SearchField extends React.Component {
 }
 
 // type check to ensure we are called correctly
-SearchField.propTypes = {
-  onSearchQueryChange: PropTypes.func.isRequired,
-  onSearchParamsChange: PropTypes.func.isRequired,
+SearchField.propTypes = {  
   searchQuery: PropTypes.string,
   queryType: PropTypes.number,
   returnPassages: PropTypes.bool,

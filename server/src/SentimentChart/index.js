@@ -294,6 +294,5 @@ SentimentChart.propTypes = {
   keywords: PropTypes.object,
   entityTypes: PropTypes.object,
   chartType: PropTypes.string,
-  term: PropTypes.string,
-  onSentimentTermChanged: PropTypes.func.isRequired,
+  term: PropTypes.string, 
 };

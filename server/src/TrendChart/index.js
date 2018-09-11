@@ -217,6 +217,5 @@ TrendChart.propTypes = {
   trendData: PropTypes.object,
   trendLoading: PropTypes.bool,
   trendError: PropTypes.object,
-  term: PropTypes.string,
-  onGetTrendDataRequest: PropTypes.func.isRequired,
+  term: PropTypes.string  
 };
