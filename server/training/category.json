@@ -1,0 +1,81 @@
+{
+    "banter": [
+      "hi",
+      "howdy",
+      "hello",
+      "haps",
+      "hey",
+      "yo"
+    ],
+    "civil": [
+      "thanks",
+      "welcome",
+      "appreciate"
+    ],
+    "help": [
+      "help"
+    ],
+    "sermon": [
+      "message",
+      "sermon",
+      "preach"
+      ],
+    "prayer": [
+      "prayer"
+    ],
+    "music": [
+      "song",
+      "worship",
+      "playlist",
+      "music"
+    ],
+    "membership": [
+      "starting",
+      "point",
+      "startingpoint",
+      "starting point"
+    ],
+    "childcare": [
+      "nursery",
+      "child",
+      "children",
+      "childcare"
+    ],
+    "location": [
+      "directions",
+      "map",
+      "location"
+    ],
+    "times": [
+      "services",
+      "times"
+    ],
+    "cg": [
+      "community",
+      "group",
+      "cg"
+    ],
+    "beliefs": [
+      "jesus",
+      "beliefs",
+      "doctrine",
+      "theology",
+      "denomination",
+      "baptist"
+    ],
+    "missions": [
+      "missions",
+      "trips",
+      "serve",
+      "service",
+      "go",
+      "overseas",
+      "nations"
+    ],
+    "tithe": [
+      "tithe",
+      "give",
+      "giving",
+      "money"
+    ]
+}

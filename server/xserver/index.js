@@ -20,8 +20,6 @@ const favicon =               require('serve-favicon');
 const transport =             require('../config/gmail')
 const { g, b, gr, r, y } =    require('../console');
 
-const test =                  require('../test/content.test.js')
-const test2 =                 require('../test/update.test.js')
 // Express app
 const app = express();
 
@@ -89,14 +87,14 @@ const classify =            express.Router()
 const ingest =              express.Router()
 const cycle =               express.Router()
 
-require('../routes/config')(config)
+//require('../routes/config')(config)
 require('../routes/home')(home)
-require('../routes/search')(search)
-require('../routes/trend')(trend)
-require('../routes/content')(content)
+//require('../routes/search')(search)
+//require('../routes/trend')(trend)
+//require('../routes/content')(content)
 require('../routes/intent')(intent)
 require('../routes/classify')(classify)
-require('../routes/ingest')(ingest)
+//require('../routes/ingest')(ingest)
 require('../routes/cycle')(cycle)
 
 //////////////////////////////////////////////////////////////////////////
@@ -139,17 +137,3 @@ app.listen(port, () => {
   })
 
 
-//////////////////////////////////////////
-//////////// test runner ////////////////
-////////////////////////////////////////
-
-const contentTest = () => {
-  test.testContent()
-}
-
-const updateTest = () => {
-  test2.testUpdate()
-}
-
-//setTimeout(contentTest, 1000, 'content')
-//setTimeout(updateTest, 1000, 'content')
