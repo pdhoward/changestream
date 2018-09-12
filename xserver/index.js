@@ -16,6 +16,7 @@ const expressBrowserify =     require('express-browserify');
 const bodyParser =  				  require('body-parser')
 const path =                  require('path');
 const cors =                  require('cors')
+const Redis =                 require('ioredis')
 const favicon =               require('serve-favicon');
 const transport =             require('../config/gmail')
 const { g, b, gr, r, y } =    require('../console');
@@ -154,6 +155,16 @@ app.post('/api/cycle', cycle)
 app.get('/', home)
 
 const port = process.env.VCAP_APP_PORT || process.env.PORT
+
+redis.subscribe('news', 'music', 'chat', function (err, count) {
+  // Now we are subscribed to both the 'news' and 'music' channels.
+  // `count` represents the number of channels we are currently subscribed to.
+  console.log(`Currently tracking ${count} channels`) 
+});
+
+redis.on('message', function (channel, message) {  
+  console.log('Receive message %s from channel %s', message, channel);
+});
 
 app.listen(port, () => {
     console.log(`listening on port ${port}`)
