@@ -27,6 +27,8 @@ mongoose.connect('mongodb://localhost/tasksdb?replicaSet=rs0', { useNewUrlParser
 
 const db = mongoose.connection;
 
+const collection = db.collection("messagetest");
+
 
 ///////////////////////////////////////////////////////////////////////
 ////////////////// streaming server set up via redislab///////////////
@@ -57,17 +59,22 @@ const register = () => {
 
     console.log("REGISTERING ALL THE EVENTS")
 
-    redis.subscribe('news', 'music', 'chat', function (err, count) {
-        // Now we are subscribed to both the 'news' and 'music' channels.
-        // `count` represents the number of channels we are currently subscribed to.
+    redis.subscribe('news', 'music', 'chat', function (err, count) {       
         console.log(`Currently tracking ${count} channels`)
+    });
+
+    redis.on('message', function (channel, message) {     
+      console.log('Receive message %s from channel %s', message, channel);
+      collection.insertOne({ channel: channel, message: message }, function (err) {
+        assert.ifError(err);
+      });
     });
 
 
     db.on('error', console.error.bind(console, 'Connection Error:'));
 
     db.once('open', () => {
-      const taskCollection = db.collection('tasks');
+      const taskCollection = db.collection('messagetest');
       const changeStream = taskCollection.watch();
         
       changeStream.on('change', (change) => {
