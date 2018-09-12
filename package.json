@@ -37,6 +37,7 @@
     "express-react-views": "^0.10.2",
     "g": "^2.0.1",
     "help": "^3.0.2",
+    "ioredis": "^4.0.0",
     "moment": "^2.22.2",
     "mongoose": "^5.2.9",
     "natural": "^0.6.1",
