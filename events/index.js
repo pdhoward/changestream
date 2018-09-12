@@ -1,33 +1,12 @@
 
 require('dotenv').config()
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const api = require('./routes/api');
-const Pusher = require('pusher');
-const assert = require("assert");
+const bodyParser =              require('body-parser');
+const mongoose =                require('mongoose');
+const Redis =                   require('ioredis')
+const api =                     require('../routes/api');
+const assert =                  require("assert");
 
-const pusher = new Pusher({
-  appId: process.env.appId,
-  key: process.env.key,
-  secret: process.env.secret,
-  cluster: process.env.cluster,
-  encrypted: true,
-});
 const channel = 'tasks';
-
-const app = express();
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  next();
-});
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/api', api);
 
 /*
 Modify Change Stream Output using Aggregation Pipelines
@@ -42,44 +21,86 @@ const pipeline = [
   }
 ];
 
-mongoose.connect('mongodb://localhost/tasksdb?replicaSet=rs0');
+mongoose.connect('mongodb://localhost/tasksdb?replicaSet=rs0', { useNewUrlParser: true });
 
 // mongodb://localhost:27017,localhost:27018,localhost:27019?replicaSet=mongo-repl
 
 const db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'Connection Error:'));
 
-db.once('open', () => {
-  app.listen(9000, () => {
-    console.log('Node server running on port 9000');
-  });
+///////////////////////////////////////////////////////////////////////
+////////////////// streaming server set up via redislab///////////////
+//////////////////////////////////////////////////////////////////////
 
-  const taskCollection = db.collection('tasks');
-  const changeStream = taskCollection.watch();
-    
-  changeStream.on('change', (change) => {
-    console.log(change);
-      
-    if(change.operationType === 'insert') {
-      const task = change.fullDocument;
-      pusher.trigger(
-        channel,
-        'inserted', 
-        {
-          id: task._id,
-          task: task.task,
-        }
-      ); 
-    } else if(change.operationType === 'delete') {
-      pusher.trigger(
-        channel,
-        'deleted', 
-        change.documentKey._id
-      );
-    }
-  });
+
+let redisport = process.env.REDISPORT;
+let redishost = process.env.REDISHOST;
+let redispassword = process.env.REDISPASSWORD;
+
+var redis = new Redis({
+    port: redisport,
+    host: redishost,
+    password: redispassword
+
 });
+var pub = new Redis({
+    port: redisport,
+    host: redishost,
+    password: redispassword
+})
+
+
+///////////////////////////////////////////////////////////////////////
+//////////////////   register events being monitored    //////////////
+//////////////////////////////////////////////////////////////////////
+const register = () => {
+
+    console.log("REGISTERING ALL THE EVENTS")
+
+    redis.subscribe('news', 'music', 'chat', function (err, count) {
+        // Now we are subscribed to both the 'news' and 'music' channels.
+        // `count` represents the number of channels we are currently subscribed to.
+        console.log(`Currently tracking ${count} channels`)
+    });
+
+
+    db.on('error', console.error.bind(console, 'Connection Error:'));
+
+    db.once('open', () => {
+      const taskCollection = db.collection('tasks');
+      const changeStream = taskCollection.watch();
+        
+      changeStream.on('change', (change) => {
+        console.log("CHANGE DB DECTECTED")
+        console.log(change);
+          
+        if(change.operationType === 'insert') {
+          const task = change.fullDocument;
+          console.log("------INSERT-----") 
+          console.log(task)
+        } else if(change.operationType === 'delete') {
+            console.log("-----DELETE------")      
+            console.log(change.documentKey._id)     
+        }
+      });
+    });
+
+}
+
+
+const events = (app) => {
+
+    let server = require('http').Server(app);
+
+    register()
+
+    return server
+
+   
+}
+
+module.exports = events
+/*
 
 db.on('open', ()  => {
       console.log("Connected correctly to server");
@@ -143,5 +164,5 @@ db.on('open', ()  => {
   .catch(err => {
     console.error(err);
   });
-
+*/
 

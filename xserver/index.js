@@ -1,8 +1,6 @@
 'use strict';
 
-require('dotenv').config({
-  silent: true
-});
+require('dotenv').config();
 require('isomorphic-fetch');
 
 ////////////////////////////////////////////////////////////////
@@ -16,7 +14,6 @@ const expressBrowserify =     require('express-browserify');
 const bodyParser =  				  require('body-parser')
 const path =                  require('path');
 const cors =                  require('cors')
-const Redis =                 require('ioredis')
 const favicon =               require('serve-favicon');
 const transport =             require('../config/gmail')
 const { g, b, gr, r, y } =    require('../console');
@@ -54,32 +51,11 @@ if (!isDev) {
 }
 
 
-///////////////////////////////////////////////////////////////////////
-////////////////// streaming server set up via redislab///////////////
-//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+////////////Event Registration . Including Server, Streams and db////////
+////////////////////////////////////////////////////////////////////////
 
-
-let redisport = process.env.REDISPORT;
-let redishost = process.env.REDISHOST;
-let redispassword = process.env.REDISPASSWORD;
-
-var redis = new Redis({
-  port: redisport,
-  host: redishost,
-  password: redispassword
-
-});
-var pub = new Redis({
-  port: redisport,
-  host: redishost,
-  password: redispassword
-})
-
-redis.subscribe('news', 'music', 'chat', function (err, count) {
-  // Now we are subscribed to both the 'news' and 'music' channels.
-  // `count` represents the number of channels we are currently subscribed to.
-  console.log(`Currently tracking ${count} channels`)
-});
+const server = require('../events')(app)
 
 ///////////////////////////////////////////////////////////////////////
 /////////////////// messaging alert for platform errors ///////////////
@@ -115,6 +91,7 @@ const intent =              express.Router()
 const classify =            express.Router()
 const ingest =              express.Router()
 const cycle =               express.Router()
+const message =             express.Router()
 
 //require('../routes/config')(config)
 require('../routes/home')(home)
@@ -125,6 +102,7 @@ require('../routes/intent')(intent)
 require('../routes/classify')(classify)
 //require('../routes/ingest')(ingest)
 require('../routes/cycle')(cycle)
+
 
 //////////////////////////////////////////////////////////////////////////
 ///////////////////////////// API CATALOGUE /////////////////////////////
@@ -160,14 +138,16 @@ app.post('/api/cycle', cycle)
 app.get('/', home)
 
 // registered event
-
+/*
 redis.on('message', function (channel, message) {
   console.log('Receive message %s from channel %s', message, channel);
 });
+*/
+
 
 const port = process.env.VCAP_APP_PORT || process.env.PORT
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`listening on port ${port}`)
   })
 
