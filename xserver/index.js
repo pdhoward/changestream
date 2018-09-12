@@ -54,8 +54,31 @@ if (!isDev) {
 
 
 ///////////////////////////////////////////////////////////////////////
+////////////////// streaming server set up via redislab///////////////
+//////////////////////////////////////////////////////////////////////
+
+
+let redisport = process.env.REDISPORT;
+let redishost = process.env.REDISHOST;
+let redispassword = process.env.REDISPASSWORD;
+
+var redis = new Redis({
+  port: redisport,
+  host: redishost,
+  password: redispassword
+
+});
+var pub = new Redis({
+  port: redisport,
+  host: redishost,
+  password: redispassword
+})
+
+
+///////////////////////////////////////////////////////////////////////
 /////////////////// messaging alert for platform errors ///////////////
 //////////////////////////////////////////////////////////////////////
+
 
 const mailObject = {
   from: process.env.TRANSPORT_LABEL,
