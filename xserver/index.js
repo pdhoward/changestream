@@ -75,6 +75,11 @@ var pub = new Redis({
   password: redispassword
 })
 
+redis.subscribe('news', 'music', 'chat', function (err, count) {
+  // Now we are subscribed to both the 'news' and 'music' channels.
+  // `count` represents the number of channels we are currently subscribed to.
+  console.log(`Currently tracking ${count} channels`)
+});
 
 ///////////////////////////////////////////////////////////////////////
 /////////////////// messaging alert for platform errors ///////////////
@@ -154,17 +159,13 @@ app.post('/api/cycle', cycle)
 // home page
 app.get('/', home)
 
-const port = process.env.VCAP_APP_PORT || process.env.PORT
+// registered event
 
-redis.subscribe('news', 'music', 'chat', function (err, count) {
-  // Now we are subscribed to both the 'news' and 'music' channels.
-  // `count` represents the number of channels we are currently subscribed to.
-  console.log(`Currently tracking ${count} channels`) 
-});
-
-redis.on('message', function (channel, message) {  
+redis.on('message', function (channel, message) {
   console.log('Receive message %s from channel %s', message, channel);
 });
+
+const port = process.env.VCAP_APP_PORT || process.env.PORT
 
 app.listen(port, () => {
     console.log(`listening on port ${port}`)
