@@ -73,12 +73,12 @@ const register = () => {
 
     db.on('error', console.error.bind(console, 'Connection Error:'));
 
-    db.once('open', () => {
+    db.on('open', () => {
       const taskCollection = db.collection('messagetest');
       const changeStream = taskCollection.watch();
         
       changeStream.on('change', (change) => {
-        console.log("CHANGE DB DECTECTED")
+        console.log("CHANGE DB DETECTED")
         console.log(change);
           
         if(change.operationType === 'insert') {

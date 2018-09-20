@@ -5,8 +5,8 @@
 ///////////////////////////////////////////////////////
 const bodyParser =  		   require('body-parser')
 const contentful =             require('contentful');
-const Table =                  require('cli-table2')
-const path =                   require('path')
+const mongoose =               require('mongoose');
+const assert =                 require("assert");
 const sortby =                 require('sort-by')
 const moment =                 require('moment')
 const { g, b, gr, r, y } =     require('../console');
@@ -38,8 +38,15 @@ const update = (router) => {
     console.log(updatedAt)
     console.log(req.body.fields.name)
     console.log(req.body.fields.message)
-    res.end()
+   
+      const db = mongoose.connection;
 
+      const collection = db.collection("messagetest");
+      collection.updateOne({ "ironman": "tony stark" }, { $set: { "ironman": "elon musk" } }, function (err) {
+          assert.ifError(err);
+      });
+    
+    res.end()
     next()
     
   })
