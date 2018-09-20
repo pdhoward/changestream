@@ -92,6 +92,7 @@ const classify =            express.Router()
 const ingest =              express.Router()
 const cycle =               express.Router()
 const message =             express.Router()
+const update =              express.Router()
 
 //require('../routes/config')(config)
 require('../routes/home')(home)
@@ -102,6 +103,7 @@ require('../routes/intent')(intent)
 require('../routes/classify')(classify)
 //require('../routes/ingest')(ingest)
 require('../routes/cycle')(cycle)
+require('../routes/update')(update)
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -133,6 +135,9 @@ app.post('/api/ingest', ingest)
 
 // test cycle - content-driven agent
 app.post('/api/cycle', cycle)
+
+// test cycle - contentful update
+app.post('/api/update', update)
 
 // home page
 app.get('/', home)
