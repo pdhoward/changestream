@@ -1,5 +1,5 @@
-'use strict';
-require('dotenv').config();
+
+
 ////////////////////////////////////////////////////////
 ////////        respond to cms webhook          ///////
 ///////////////////////////////////////////////////////
@@ -17,7 +17,9 @@ const update = (router) => {
 
   router.use(function(req, res, next) {
     console.log(g("Webhook Tests with CMS"))
-    console.log(req.body)
+    console.log(req.url)
+    console.log(req.method)
+    next()
     
   })
 }
