@@ -42,7 +42,7 @@ const update = (router) => {
       const db = mongoose.connection;
 
       const collection = db.collection("messagetest");
-      collection.updateOne({ "ironman": "tony stark" }, { $set: { "ironman": "elon musk" } }, function (err) {
+      collection.insertOne({ "ironman": "tony stark" }, { $set: { "ironman": "elon musk" } }, function (err) {
           assert.ifError(err);
       });
     
