@@ -43,15 +43,14 @@ const update = (router) => {
       let group = req.body.sys.contentType.sys.id
       let channel = req.body.fields.name
       let msg = req.body.fields.message
-      let count = req.body.sys.revision
-      let updatedAt = req.body.sys.updatedAt
+      let count = req.body.sys.revision     
 
       let msgObject = {
         "group": group,
-        "chammel": channel,
+        "channel": channel,
         "msg": msg,
         "count": count,
-        "updatedAt": UpdatedAt
+        "updatedAt": updatedAt
       }
 
       const collection = db.collection("messagetest");
