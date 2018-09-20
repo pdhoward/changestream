@@ -17,7 +17,7 @@ const update = (router) => {
 
   router.use(function(req, res, next) {
     console.log(g("Webhook Tests with CMS"))
-    console.log(req.body).pretty()
+    console.log(req.body)
     
   })
 }
