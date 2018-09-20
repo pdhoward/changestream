@@ -40,9 +40,22 @@ const update = (router) => {
     console.log(req.body.fields.message)
    
       const db = mongoose.connection;
+      let group = req.body.sys.contentType.sys.id
+      let channel = req.body.fields.name
+      let msg = req.body.fields.message
+      let count = req.body.sys.revision
+      let updatedAt = req.body.sys.updatedAt
+
+      let msgObject = {
+        "group": group,
+        "chammel": channel,
+        "msg": msg,
+        "count": count,
+        "updatedAt": UpdatedAt
+      }
 
       const collection = db.collection("messagetest");
-      collection.insertOne({ "ironman": "tony stark" }, { $set: { "ironman": "elon musk" } }, function (err) {
+      collection.insertOne(msgObject, function (err) {
           assert.ifError(err);
       });
     
