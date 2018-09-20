@@ -11,6 +11,7 @@ const sortby =                 require('sort-by')
 const moment =                 require('moment')
 const { g, b, gr, r, y } =     require('../console');
 
+let m = "MMMM, DD, YYYY, h:mm:ss a"
 
 const update = (router) => {
 
@@ -31,8 +32,8 @@ const update = (router) => {
     console.log(JSON.stringify(req.body.sys.environment))
     console.log(JSON.stringify(req.body.sys.contentType))
     console.log(req.body.sys.revision)
-    let createdAt = moment(req.body.sys.createdAt).format("MMM, DD, YYY, h:mm:ss a")
-    let updatedAt = moment(req.body.sys.updatedAt).format()
+    let createdAt = moment(req.body.sys.createdAt).format(m)
+    let updatedAt = moment(req.body.sys.updatedAt).format(m)
     console.log(createdAt)
     console.log(updatedAt)
     console.log(req.body.fields.name)
