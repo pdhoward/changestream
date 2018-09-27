@@ -10,10 +10,12 @@ const assert =                 require("assert");
 const Redis =                  require('ioredis')
 const sortby =                 require('sort-by')
 const moment =                 require('moment')
+const events =                 require('../events')
 const { g, b, gr, r, y } =     require('../console');
 
 let m = "MMMM, DD, YYYY, h:mm:ss a"
 
+/*
 
 let redisport = process.env.REDISPORT;
 let redishost = process.env.REDISHOST;
@@ -30,7 +32,7 @@ var pub = new Redis({
   host: redishost,
   password: redispassword
 })
-
+*/
 const update = (router) => {
 
   router.use(bodyParser.json());
@@ -76,8 +78,10 @@ const update = (router) => {
           assert.ifError(err);
       });
 
-     pub.publish('watch', msgObject.msg);
-    
+      // Temp Hack -- need better solution for unpacking cms objects
+
+     //pub.publish('watch', msgObject.msg['en-US']);
+    events.pub('watch', msgObject.msg['en-US'])
     res.end()
     next()
     
