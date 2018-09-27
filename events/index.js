@@ -94,22 +94,21 @@ const register = () => {
 
 }
 
-
-module.exports.events = (app) => {
-
-    let server = require('http').Server(app);
-
-    register()
-
-    return server
-   
+const events = (app) => {
+  let server = require('http').Server(app);
+  register()
+  return server
 }
 
-module.exports.pub = (channel, message) => {
+const publish = (channel, message) => {
   pub.publish(channel, message);
 }
 
-//module.exports = events
+module.exports = {
+  events,
+  publish
+}
+   
 /*
 
 db.on('open', ()  => {

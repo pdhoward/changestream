@@ -62,7 +62,7 @@ const update = (router) => {
       // Temp Hack -- need better solution for unpacking cms objects
 
      //pub.publish('watch', msgObject.msg['en-US']);
-    events.pub('watch', msgObject.msg['en-US'])
+    events.publish('watch', msgObject.msg['en-US'])
     res.end()
     next()
     
