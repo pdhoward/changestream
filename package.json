@@ -1,7 +1,7 @@
 {
   "name": "changestreams",
   "version": "0.8.0",
-  "description": "intelligent content",
+  "description": "intelligent content management",
   "main": "server.js",
   "license": "MIT",
   "scripts": {
