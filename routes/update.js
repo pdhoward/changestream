@@ -1,17 +1,35 @@
 
-
+require('dotenv').config()
 ////////////////////////////////////////////////////////
 ////////        respond to cms webhook          ///////
 ///////////////////////////////////////////////////////
-const bodyParser =  		   require('body-parser')
+const bodyParser =  		       require('body-parser')
 const contentful =             require('contentful');
 const mongoose =               require('mongoose');
 const assert =                 require("assert");
+const Redis =                  require('ioredis')
 const sortby =                 require('sort-by')
 const moment =                 require('moment')
 const { g, b, gr, r, y } =     require('../console');
 
 let m = "MMMM, DD, YYYY, h:mm:ss a"
+
+
+let redisport = process.env.REDISPORT;
+let redishost = process.env.REDISHOST;
+let redispassword = process.env.REDISPASSWORD;
+
+var redis = new Redis({
+  port: redisport,
+  host: redishost,
+  password: redispassword
+
+});
+var pub = new Redis({
+  port: redisport,
+  host: redishost,
+  password: redispassword
+})
 
 const update = (router) => {
 
@@ -57,6 +75,8 @@ const update = (router) => {
       collection.insertOne(msgObject, function (err) {
           assert.ifError(err);
       });
+
+     pub.publish('watch', msgObject.msg);
     
     res.end()
     next()
