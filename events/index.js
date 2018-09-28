@@ -62,10 +62,10 @@ const register = () => {
     });
 
 
-    db.on('error', console.error.bind(console, 'Connection Error:'));
+    db.on('error', console.error.bind(console, 'Connection Error:'))
 
     db.once('open', () => {
-      const collection = db.collection('posts');
+      const collection = db.collection('posts')
       console.log(`db connection is a success`)
      
     });
@@ -82,8 +82,25 @@ const publish = (channel, message) => {
   pub.publish(channel, message);
 }
 
+// under construction
+const isChange = (obj) => {
+      if (obj.sys.revision == 1) {
+        console.log(`This is new - revision is ${obj.sys.revision}`)
+        return true
+      }
+      const posts = db.collection('posts');
+      posts.findOneAndUpdate({ id: obj.sys.id }, { $set: { obj: obj } }, { new: true }, function (err, doc) {
+        if (err) {
+          console.log("Something wrong when updating data!");
+        }
+        console.log(doc);
+        return true
+  });
+}
+
 module.exports = {
   events,
+  isChange,
   publish
 }
    

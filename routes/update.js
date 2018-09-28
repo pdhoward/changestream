@@ -54,15 +54,21 @@ const update = (router) => {
         "updatedAt": updatedAt
       }
 
-      const collection = db.collection("messagetest");
-      collection.insertOne(msgObject, function (err) {
-          assert.ifError(err);
-      });
+   //   const collection = db.collection("messagetest");
+    //  collection.insertOne(msgObject, function (err) {
+     //     assert.ifError(err);
+      //});
 
       // Temp Hack -- need better solution for unpacking cms objects
 
      //pub.publish('watch', msgObject.msg['en-US']);
     events.publish('watch', msgObject.msg['en-US'])
+    let isChange = events.isChange(msgObject)
+    if (isChange) {
+        console.log(`Database Updated With New Change`)
+      } else {
+        console.log(`No Change in DB Detected`)
+      }
     res.end()
     next()
     
