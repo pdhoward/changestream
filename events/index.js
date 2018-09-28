@@ -94,7 +94,7 @@ const isChange = (obj) => {
         return true
       }
       const posts = db.collection('posts');
-      posts.findOneAndUpdate({ id: obj.sys.id }, { $set: { obj: obj } }, { new: true }, function (err, doc) {
+      posts.findOneAndUpdate({ id: obj.sys.id }, { $set: { obj: obj } }, options, function (err, doc) {
         if (err) {
           console.log("Something wrong when updating data!");
         }
