@@ -14,7 +14,12 @@ const pipeline = [
   }
 ];
 
-mongoose.connect('mongodb://localhost/streamdb', { useNewUrlParser: true });
+let options = {
+  upsert: true, 
+  useNewUrlParser: true 
+}
+
+mongoose.connect('mongodb://localhost/streamdatabase', options);
 
 const db = mongoose.connection;
 
