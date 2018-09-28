@@ -63,7 +63,7 @@ const update = (router) => {
 
      //pub.publish('watch', msgObject.msg['en-US']);
     events.publish('watch', msgObject.msg['en-US'])
-    let isChange = events.isChange(msgObject)
+    let isChange = events.isChange(req.body)
     if (isChange) {
         console.log(`Database Updated With New Change`)
       } else {
