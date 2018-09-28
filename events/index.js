@@ -8,22 +8,13 @@ const assert =                  require("assert");
 
 const channel = 'tasks';
 
-/*
-Modify Change Stream Output using Aggregation Pipelines
-You can control change stream output by providing an array of one or more of the following pipeline stages when configuring the change stream:
-$match, $project, $addFields, $replaceRoot, $redact
-See Change Events for more information on the change stream response document format.
-https://docs.mongodb.com/manual/reference/change-events/#change-stream-output
-*/
 const pipeline = [
   {
     $project: { documentKey: false }
   }
 ];
 
-mongoose.connect('mongodb://localhost/tasksdb?replicaSet=rs0', { useNewUrlParser: true });
-
-// mongodb://localhost:27017,localhost:27018,localhost:27019?replicaSet=mongo-repl
+mongoose.connect('mongodb://localhost/streamdb', { useNewUrlParser: true });
 
 const db = mongoose.connection;
 
@@ -73,23 +64,10 @@ const register = () => {
 
     db.on('error', console.error.bind(console, 'Connection Error:'));
 
-    db.on('open', () => {
-      const taskCollection = db.collection('messagetest');
-      const changeStream = taskCollection.watch();
-        
-      changeStream.on('change', (change) => {
-        console.log("CHANGE DB DETECTED")
-        console.log(change);
-          
-        if(change.operationType === 'insert') {
-          const task = change.fullDocument;
-          console.log("------INSERT-----") 
-          console.log(task)
-        } else if(change.operationType === 'delete') {
-            console.log("-----DELETE------")      
-            console.log(change.documentKey._id)     
-        }
-      });
+    db.once('open', () => {
+      const collection = db.collection('posts');
+      console.log(`db connection is a success`)
+     
     });
 
 }
