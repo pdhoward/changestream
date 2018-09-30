@@ -87,19 +87,10 @@ const publish = (channel, message) => {
   pub.publish(channel, message);
 }
 
-// under construction
 const isChange = (obj) => {
       
       const posts = db.collection('posts');
-      /*
-      posts.findOneAndUpdate({ id: obj.sys.id }, { $set: { obj: obj } }, options, function (err, doc) {
-        if (err) {
-          console.log("Something wrong when updating data!");
-        }
-        console.log(doc);
-        return true
-  });
-  */
+      
       return new Promise ((resolve, reject) => {
 
         if (obj.sys.revision == 1) {
