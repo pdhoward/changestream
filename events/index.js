@@ -1,11 +1,12 @@
 
 require('dotenv').config()
-const bodyParser =              require('body-parser');
-const mongoose =                require('mongoose');
+const bodyParser =              require('body-parser')
+const mongoose =                require('mongoose')
 const Redis =                   require('ioredis')
-const api =                     require('../routes/api');
-const assert =                  require("assert");
-const { g, b, gr, r, y } =      require('../console');
+const api =                     require('../routes/api')
+const assert =                  require("assert")
+const {diff} =                  require("deep-diff")
+const { g, b, gr, r, y } =      require('../console')
 
 const channel = 'tasks';
 
@@ -102,6 +103,8 @@ const isChange = (obj) => {
           resolve(false)
           return
         }
+
+        // EXPERIMENTAL -- diff of 2 objects
 
         posts.findOne({id: obj.sys.id})
           .then((doc) => {
