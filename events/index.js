@@ -103,15 +103,18 @@ const isChange = (obj) => {
         return true
   });
   */
+      return new Promise ((resolve, reject) => {
         posts.findOneAndUpdate({ id: obj.sys.id }, { $set: { obj: obj } }, options)
               .then((doc) => {
                 console.log(doc);
-                return true
+                resolve(true)
               })
               .catch((err) => {
                 console.log("Something wrong when updating data!");
+                rject(false)
               })
-}
+            })
+    }
 
 module.exports = {
   events,

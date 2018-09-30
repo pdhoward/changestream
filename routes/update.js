@@ -63,17 +63,26 @@ const update = (router) => {
 
      //pub.publish('watch', msgObject.msg['en-US']);
     events.publish('watch', msgObject.msg['en-US'])
+    /*
     let isChange = events.isChange(req.body)
     if (isChange) {
-        console.log(`Database Updated With New Change`)
+        console.log(`Database Updated With New Change - ${isChange}`)
       } else {
-        console.log(`No Change in DB Detected`)
+        console.log(`No Change in DB Detected - ${isChange}`)
       }
     res.end()
     next()
-    
+    */
+    events.isChange(req.body).then((result) => {
+      if (result) {
+        console.log(`Database Updated With New Change - ${result}`)
+      } else {
+        console.log(`No Change in DB Detected - ${result}`)
+      }
+      res.end()
+      next()
+    })
   })
 }
-
 
 module.exports = update
