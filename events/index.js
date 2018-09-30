@@ -5,6 +5,7 @@ const mongoose =                require('mongoose');
 const Redis =                   require('ioredis')
 const api =                     require('../routes/api');
 const assert =                  require("assert");
+const { g, b, gr, r, y } =      require('../console');
 
 const channel = 'tasks';
 
@@ -87,6 +88,9 @@ const publish = (channel, message) => {
   pub.publish(channel, message);
 }
 
+// updates existing db record 
+// for first time posts -- REFACTOR --- ADD CODE TO update db
+
 const isChange = (obj) => {
       
       const posts = db.collection('posts');
@@ -96,7 +100,15 @@ const isChange = (obj) => {
         if (obj.sys.revision == 1) {
           console.log(`This is new - revision is ${obj.sys.revision}`)
           resolve(false)
+          return
         }
+
+        posts.findOne({id: obj.sys.id})
+          .then((doc) => {
+            let differences = diff(obj, doc)
+            console.log(b(`-----------${obj.sys.id}-----------`))
+            console.log(differences)
+          })
 
         posts.findOneAndUpdate({ id: obj.sys.id }, { $set: { obj: obj } }, options)
               .then((doc) => {
