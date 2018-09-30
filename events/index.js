@@ -94,6 +94,7 @@ const isChange = (obj) => {
         return true
       }
       const posts = db.collection('posts');
+      /*
       posts.findOneAndUpdate({ id: obj.sys.id }, { $set: { obj: obj } }, options, function (err, doc) {
         if (err) {
           console.log("Something wrong when updating data!");
@@ -101,6 +102,15 @@ const isChange = (obj) => {
         console.log(doc);
         return true
   });
+  */
+        posts.findOneAndUpdate({ id: obj.sys.id }, { $set: { obj: obj } }, options)
+              .then((doc) => {
+                console.log(doc);
+                return true
+              })
+              .catch((err) => {
+                console.log("Something wrong when updating data!");
+              })
 }
 
 module.exports = {
