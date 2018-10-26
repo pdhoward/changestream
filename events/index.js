@@ -5,6 +5,7 @@ const mongoose =                require('mongoose')
 const Redis =                   require('ioredis')
 const api =                     require('../routes/api')
 const assert =                  require("assert")
+const nlp =                     require("compromise")
 const {diff} =                  require("deep-diff")
 const { g, b, gr, r, y } =      require('../console')
 
@@ -62,7 +63,69 @@ const register = () => {
     });
 
     redis.on('message', function (channel, message) {     
-      console.log('Receive message %s from channel %s', message, channel);
+      console.log(`Received ${message} from ${channel}`);
+      console.log(g("----------compromise test ---------"))
+      
+      //console.log(JSON.stringify(topics))
+      console.log(nlp('Hey everybody, I’m lookin’ for Amanda Huggink…').topics().data())
+      let topics = nlp('Hey everybody, I’m lookin’ for Amanda Huggink…').topics().data()
+      console.log(typeof message)
+      console.log(message)
+      console.log(topics)
+      let topic2 = nlp(message).topics().data()
+      console.log(topic2)
+      console.log("-------name---------")
+      let name = nlp(message).people().out('array')
+      console.log(name)
+      console.log("-------firstname----------")
+      let firstname = nlp(message).people().firstNames().out('array')
+      console.log(firstname)
+      console.log("-------lastname----------")
+      let lastname = nlp(message).people().lastNames().out('array')
+      console.log(lastname)
+      console.log("-------dates---------")
+      let dates = nlp(message).dates().data()
+      console.log(dates)
+      console.log("-------nouns--------")
+      let nouns = nlp(message).nouns().out('array')
+      console.log(nouns)
+/*
+      const plugin = {
+        words: {
+          't rex': 'Dinosaur',
+          'pangaea': 'Noun',
+          'tethys sea': 'Noun'
+        },
+        tags: {
+          Dinosaur: {
+            isA: 'Animal'
+          },
+          Animal: {
+            isA: 'Noun'
+          }
+        },
+        patterns: {
+          "the #TitleCase (era|epoch)": "TimePeriod", //'the Jurassic era'
+          "#Noun rex": "Dinosaur", //
+        },
+        regex: {
+          '^paleo[a-z]{4}': 'Noun',
+          '[a-z]iraptor$': 'Dinosaur',
+        },
+        plurals: {
+          brontosaurus: 'brontosauri',
+          stegosaurus: 'stegosauruses'
+        }
+      };
+      //okay! 
+      nlp.plugin(plugin);
+      //now nlp will act properly-
+      let doc = nlp('i saw a huge T-Rex and a velociraptor');
+      //return these new tagged-results.
+      return doc.match('#Animal+').out('array')
+    }
+*/
+
       collection.insertOne({ channel: channel, message: message }, function (err) {
         assert.ifError(err);
       });
