@@ -7,12 +7,8 @@ const api =                     require('../routes/api')
 const assert =                  require("assert")
 const nlp =                     require("compromise")
 const {diff} =                  require("deep-diff")
-const { interval } =            require('../functions/interval')
+const interval =                require('../functions/interval')
 const { g, b, gr, r, y } =      require('../console');
-
-customEE.once('ping', () => console.log('started pinging'))
-  .on('ping', num => console.log(`ping #${num} from module`);
-const { g, b, gr, r, y } =      require('../console')
 
 const channel = 'tasks';
 
@@ -145,7 +141,12 @@ const register = () => {
      
     });
 
-    interval.once('ping', () => console.log(''))
+    interval.once('ping', () => console.log(g('The Pinging Begins')))
+    interval.on('ping', num => {
+      console.log(gr(`ping #${num} from module}`))
+      if (num > 10) interval.off('ping')
+    
+    })
 
 }
 
