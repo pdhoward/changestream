@@ -149,11 +149,11 @@ const register = () => {
     })
     console.log(r(`NEW INVENTION FOR CONVERSATIONAL COMMERCE`))
     //console.log(queryLists)
-    for (var key in queryLists) {
+    Object.keys(queryLists).forEach(key => {
       setInterval(() => {
-        queryLists[key].emit(key, `Here is ${key}`);        
+        queryLists[key].emit(key, `I am ${key}`);
       }, 3000);
-    }
+    })  
 
 
 }
