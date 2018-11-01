@@ -7,6 +7,7 @@ const api =                     require('../routes/api')
 const assert =                  require("assert")
 const nlp =                     require("compromise")
 const {diff} =                  require("deep-diff")
+var ss =                        require('string-similarity');
 const interval =                require('../functions/interval')
 const {queryLists, listen} =    require('../functions/listen')
 const { g, b, gr, r, y } =      require('../console');
@@ -51,6 +52,42 @@ var pub = new Redis({
     host: redishost,
     password: redispassword
 })
+
+///////////////////////////////////////////////////////////////////////
+////////////////// CBM  test for string matching against   ///////////
+//////////////////////////////////////////////////////////////////////
+
+const cbm = [
+  { action: 'banter',
+    url: 'https:\\\www.example.com/banter',
+    description: "banter and chit chat",
+    triggers: ['hi', 'hello', 'howdy', 'haps', 'what you doing'] },
+  {
+    action: 'buy',
+    url: 'https:\\\www.example.com/buy',
+    description: "buy the product",
+    triggers: ['i would like to buy', 'buy it', 'i am ready to buy', 
+                'ready to checkout', 'checkout please'] },
+  {
+    action: 'search',
+    url: 'https:\\\www.example.com/search',
+    description: "search for a product",
+    triggers: ['can you find that item for me', 'do you have that item', 
+               'need that item', 'how do i find that item', ] },
+  {
+    action: 'ship',
+    url: 'https:\\\www.example.com/ship',
+    description: "ship a product",
+    triggers: ['please ship', 'ship', 'ship this', 'need to send it'] },
+  {
+    action: 'about',
+    url: 'https:\\\www.example.com/about',
+    description: "CMB capability",
+    triggers: ['what do you', 'are you a bot', 'what can you handle'] }
+
+]
+
+
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -163,9 +200,23 @@ const register = () => {
         }
         else {
           console.log(`Metadata ${key} not detected in ${message}`)
-        }      
+        }
         
       })
+
+    })
+    
+    redis.on('message', function (channel, message) {
+      const obj = cbm.reduce((acc, component) => {
+        const action = component.action
+        let score = ss.findBestMatch(message, component.triggers )
+        return {
+          ...acc,
+          [action]: score.bestMatch
+        }
+      }, {})
+      console.log(r(`CBM Test for ${message}`))
+      console.log(obj)
 
     })
 
