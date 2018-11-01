@@ -73,7 +73,8 @@ const cbm = [
     url: 'https:\\\www.example.com/search',
     description: "search for a product",
     triggers: ['can you find that item for me', 'do you have that item', 
-               'need that item', 'how do i find that item', ] },
+               'need that item', 'how do i find that item', 'i need to find a product',
+               'can you help me find a product', 'need a product'] },
   {
     action: 'ship',
     url: 'https:\\\www.example.com/ship',
@@ -205,7 +206,7 @@ const register = () => {
       })
 
     })
-    
+
     redis.on('message', function (channel, message) {
       const obj = cbm.reduce((acc, component) => {
         const action = component.action
