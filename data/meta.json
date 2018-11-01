@@ -1,0 +1,114 @@
+{
+  "name": "bookstore",
+  "description": "Intelligent web. ",
+  "displayField": "title",
+  "fields": [
+    {
+      "id": "title",
+      "name": "title",
+      "type": "Symbol",
+      "localized": false,
+      "required": false,
+      "validations": [],
+      "disabled": false,
+      "omitted": false
+    },
+    {
+      "id": "id",
+      "name": "id",
+      "type": "Symbol",
+      "localized": false,
+      "required": false,
+      "validations": [],
+      "disabled": false,
+      "omitted": false
+    },
+    {
+      "id": "price",
+      "name": "price",
+      "type": "Number",
+      "localized": false,
+      "required": false,
+      "validations": [],
+      "disabled": false,
+      "omitted": false
+    },
+    {
+      "id": "path",
+      "name": "path",
+      "type": "Symbol",
+      "localized": false,
+      "required": false,
+      "validations": [],
+      "disabled": false,
+      "omitted": false
+    },
+    {
+      "id": "thumbnail",
+      "name": "thumbnail",
+      "type": "Link",
+      "localized": false,
+      "required": false,
+      "validations": [],
+      "disabled": false,
+      "omitted": false,
+      "linkType": "Asset"
+    },
+    {
+      "id": "category",
+      "name": "category",
+      "type": "Symbol",
+      "localized": false,
+      "required": false,
+      "validations": [],
+      "disabled": false,
+      "omitted": false
+    }
+  ],
+  "sys": {
+    "space": {
+      "sys": {
+        "type": "Link",
+        "linkType": "Space",
+        "id": "gbbliyj7x3rd"
+      }
+    },
+    "id": "bookstore",
+    "type": "ContentType",
+    "createdAt": "2018-10-12T15:43:39.376Z",
+    "updatedAt": "2018-10-16T20:37:58.787Z",
+    "environment": {
+      "sys": {
+        "id": "master",
+        "type": "Link",
+        "linkType": "Environment"
+      }
+    },
+    "createdBy": {
+      "sys": {
+        "type": "Link",
+        "linkType": "User",
+        "id": "0SwYVvk61w94lTT0ks5UNU"
+      }
+    },
+    "updatedBy": {
+      "sys": {
+        "type": "Link",
+        "linkType": "User",
+        "id": "0SwYVvk61w94lTT0ks5UNU"
+      }
+    },
+    "publishedCounter": 2,
+    "version": 4,
+    "publishedBy": {
+      "sys": {
+        "type": "Link",
+        "linkType": "User",
+        "id": "0SwYVvk61w94lTT0ks5UNU"
+      }
+    },
+    "publishedVersion": 3,
+    "firstPublishedAt": "2018-10-12T15:43:39.555Z",
+    "publishedAt": "2018-10-16T20:37:58.787Z"
+  }
+}
