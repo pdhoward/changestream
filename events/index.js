@@ -64,7 +64,7 @@ const register = () => {
         console.log(`Currently tracking ${count} channels`)
     });
 
-    redis.on('message', function (channel, message) {     
+    redis.on('message', function (channel, message) {
       console.log(`Received ${message} from ${channel}`);
       console.log(g("----------compromise test ---------"))
       
@@ -141,7 +141,7 @@ const register = () => {
       console.log(`db connection is a success`)
      
     });
-
+/*
     interval.once('ping', () => console.log(g('The Pinging Begins')))
     interval.on('ping', num => {
       console.log(gr(`ping #${num} from module}`))
@@ -153,7 +153,21 @@ const register = () => {
       setInterval(() => {
         queryLists[key].emit(key, `I am ${key}`);
       }, 3000);
-    })  
+    })
+*/
+    redis.on('message', function (channel, message) {
+      console.log(g(`Received ${message} from ${channel}`));
+      Object.keys(queryLists).forEach(key => {
+        if (message.includes(key)) {
+          queryLists[key].emit(key, `I am ${key}`);
+        }
+        else {
+          console.log(`Metadata ${key} not detected in ${message}`)
+        }      
+        
+      })
+
+    })
 
 
 }
