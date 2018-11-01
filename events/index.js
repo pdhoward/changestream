@@ -211,13 +211,29 @@ const register = () => {
       const obj = cbm.reduce((acc, component) => {
         const action = component.action
         let score = ss.findBestMatch(message, component.triggers )
+        let arr = []
+        let newObj = {}
+        newObj['action'] = action
+        newObj['message'] = message
+        newObj['match'] = score.bestMatch.target
+        newObj['score'] = score.bestMatch.rating
+        arr.push(newObj)
+        return acc.concat(arr)
+        
+      }, [])
+        /*
         return {
           ...acc,
-          [action]: score.bestMatch
+          [action]: arr
         }
       }, {})
+      */
       console.log(r(`CBM Test for ${message}`))
       console.log(obj)
+      //var merge = (a, b, p) => a.filter( aa => ! b.find ( bb => aa[p] === bb[p]) ).concat(b);
+      // a and b are 2 arrays, p is a property value submitted for merge/match between
+      // 2 arrays
+
 
     })
 
