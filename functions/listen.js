@@ -12,11 +12,9 @@ const metaKeys = Object.keys(metadata);
   console.log("---------------meta keys-------------")
   console.log(metaKeys)
 
-const queryLists = metaKeys.reduce((queryLists, key) => {
-    console.log("------reduce function on keys ---------------")
-    console.log(queryLists)
-    console.log(key)
-    queryLists[key] = listen.on(key, () => {console.log(`heard from ${key}`)});
-    console.log(meta[key])
+const queryLists = metaKeys.reduce((queryLists, key) => {    
+    queryLists[key] = listen.on(key, () => {console.log(`heard from ${key}`)});    
     return queryLists;
   }, {});
+
+module.exports = queryLists

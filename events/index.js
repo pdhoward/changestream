@@ -8,6 +8,7 @@ const assert =                  require("assert")
 const nlp =                     require("compromise")
 const {diff} =                  require("deep-diff")
 const interval =                require('../functions/interval')
+const listen =                  require('../functions/listen')
 const { g, b, gr, r, y } =      require('../console');
 
 const channel = 'tasks';
