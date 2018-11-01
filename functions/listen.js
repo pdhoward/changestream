@@ -16,7 +16,7 @@ const queryLists = metaKeys.reduce((queryLists, key) => {
     console.log("------reduce function on keys ---------------")
     console.log(queryLists)
     console.log(key)
-    queryLists[key] = listen.on(media[key]);
+    queryLists[key] = listen.on(key, () => {console.log(`heard from ${key}`)});
     console.log(meta[key])
     return queryLists;
   }, {});
