@@ -2,11 +2,11 @@
 const { EventEmitter } = require('eventemitter3')
 
 class WithTime extends EventEmitter {
-    async execute(asyncFunc, ...args) {
+    async execute(asyncFunc, args) {
         this.emit('begin');
         try {
             console.time('execute');
-            const data = await asyncFunc(...args);
+            const data = await asyncFunc(args, "utf8");
             this.emit('data', data);
             console.timeEnd('execute');
             this.emit('end');

@@ -1,6 +1,6 @@
 
 require('dotenv').config()
-const fs =                      require('fs');
+const fs =                      require('fs').promises
 const Redis =                   require('ioredis')
 const assert =                  require("assert")
 const nlp =                     require("compromise")
@@ -137,18 +137,21 @@ const register = () => {
       console.log(r(`CBM Test for ${message}`))
       console.log(obj)
     })
-
+    /////////////////////////////////////////////////////////////////////
    // AN EXPERIMENT IN USING CLASSES TO BUILD COMPONENT BUSINESS MODELS
+   /////////////////////////////////////////////////////////////////////
+  console.log(r(`Experiment with Classes ---------------`));
   const withTime = new WithTime();
 
   withTime.on('begin', () => console.log('About to execute'));
   withTime.on('end', () => console.log('Done with execute'));
 
-  let filename = "package.json"
+  let filename = "package.json"  
   withTime.execute(fs.readFile, filename);
 
   withTime.on('data', (data) => {
-    // do something with data
+    console.log(r("File read completed"))
+    //console.log(data)
   });
 
   withTime.on('error', (err) => {
