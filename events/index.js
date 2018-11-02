@@ -93,9 +93,10 @@ const register = () => {
 
     console.log(r(`COGNITIVE CONTENT - TAXONOMY IN MOTION`))
     //console.log(queryLists)
+    
     Object.keys(queryLists).forEach(key => {
-      setInterval(() => {
-        queryLists[key].emit(key, `I am ${key}`);
+      setTimeout(() => {
+        queryLists[key].emit(key, b(`I am ${key}`));
       }, 3000);
     })
 

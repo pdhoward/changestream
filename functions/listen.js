@@ -1,7 +1,8 @@
 
 
-const { EventEmitter } = require('eventemitter3')
-const metadata =         require('../data/meta.json')
+const { EventEmitter } =    require('eventemitter3')
+const metadata =            require('../data/meta.json')
+const { g, b, gr, r, y } =  require('../console');
 
 const listen = new EventEmitter();
 
