@@ -5,7 +5,7 @@ const Redis =                   require('ioredis')
 const assert =                  require("assert")
 const nlp =                     require("compromise")
 const {diff} =                  require("deep-diff")
-var ss =                        require('string-similarity');
+const ss =                      require('string-similarity');
 const interval =                require('../functions/interval')
 const {queryLists, listen} =    require('../functions/listen')
 const {cbm} =                   require('../data/cbm/bookstore.js')
@@ -21,8 +21,7 @@ const pipeline = [
   }
 ];
 
-let options = {
-  upsert: true, 
+let options = {  
   useNewUrlParser: true 
 }
 
