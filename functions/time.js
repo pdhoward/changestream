@@ -17,21 +17,7 @@ class WithTime extends EventEmitter {
 }
 
 module.exports = WithTime
-const withTime = new WithTime();
 
-withTime.on('begin', () => console.log('About to execute'));
-withTime.on('end', () => console.log('Done with execute'));
-
-withTime.execute(fs.readFile, __filename);
-
-withTime.on('data', (data) => {
-    // do something with data
-});
-
-withTime.on('error', (err) => {
-    // do something with err, for example log it somewhere
-    console.log(err)
-});
 
 // for system level error .. executes once
 process.once('uncaughtException', (err) => {
@@ -43,7 +29,7 @@ process.once('uncaughtException', (err) => {
     // FORCE exit the process too.
     process.exit(1);
 });
-
+/*
 /////////////////////////////////
 ///// 3rd example //////////////
 ///////////////////////////////
@@ -58,3 +44,4 @@ const getApiAndEmit = async socket => {
     console.error(`Error: ${error.code}`);
   }
 };
+*/

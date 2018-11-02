@@ -1,5 +1,6 @@
 
 require('dotenv').config()
+const fs =                      require('fs');
 const Redis =                   require('ioredis')
 const assert =                  require("assert")
 const nlp =                     require("compromise")
@@ -9,6 +10,7 @@ const db =                      require('../db')
 const interval =                require('../functions/interval')
 const {queryLists, listen} =    require('../functions/listen')
 const {cbm} =                   require('../data/cbm/bookstore')
+const WithTime =                require('../functions/time')
 const {plugin} =                require('../data/plugin')
 const { g, b, gr, r, y } =      require('../console');
 
@@ -134,12 +136,30 @@ const register = () => {
        
       console.log(r(`CBM Test for ${message}`))
       console.log(obj)
-
-
     })
+
+   // AN EXPERIMENT IN USING CLASSES TO BUILD COMPONENT BUSINESS MODELS
+  const withTime = new WithTime();
+
+  withTime.on('begin', () => console.log('About to execute'));
+  withTime.on('end', () => console.log('Done with execute'));
+
+  let filename = "package.json"
+  withTime.execute(fs.readFile, filename);
+
+  withTime.on('data', (data) => {
+    // do something with data
+  });
+
+  withTime.on('error', (err) => {
+    // do something with err, for example log it somewhere
+    console.log(err)
+  });
+
 
 
 }
+
 
 const events = (app) => {
   let server = require('http').Server(app);
