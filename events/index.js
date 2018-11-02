@@ -1,9 +1,7 @@
 
 require('dotenv').config()
-const bodyParser =              require('body-parser')
 const mongoose =                require('mongoose')
 const Redis =                   require('ioredis')
-const api =                     require('../routes/api')
 const assert =                  require("assert")
 const nlp =                     require("compromise")
 const {diff} =                  require("deep-diff")
