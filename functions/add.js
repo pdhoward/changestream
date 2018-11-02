@@ -1,5 +1,5 @@
 
-
+// execute node add.js from this directory
 
 const After2Seconds = (x) => {
   return new Promise(resolve => {
