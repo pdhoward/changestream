@@ -1,11 +1,11 @@
 
 require('dotenv').config()
-const mongoose =                require('mongoose')
 const Redis =                   require('ioredis')
 const assert =                  require("assert")
 const nlp =                     require("compromise")
 const {diff} =                  require("deep-diff")
 const ss =                      require('string-similarity');
+const db =                      require('../db')
 const interval =                require('../functions/interval')
 const {queryLists, listen} =    require('../functions/listen')
 const {cbm} =                   require('../data/cbm/bookstore.js')
@@ -13,29 +13,11 @@ const { g, b, gr, r, y } =      require('../console');
 
 const channel = 'tasks';
 
-console.log(cbm)
+////////////////////////////////////////////////////////////////
+////////////////// streaming server & db server ///////////////
+///////////////////////////////////////////////////////////////
 
-const pipeline = [
-  {
-    $project: { documentKey: false }
-  }
-];
-
-let options = {  
-  useNewUrlParser: true 
-}
-
-mongoose.connect('mongodb://localhost/streamdatabase', options);
-
-const db = mongoose.connection;
-
-const collection = db.collection("messagetest");
-
-
-///////////////////////////////////////////////////////////////////////
-////////////////// streaming server set up via redislab///////////////
-//////////////////////////////////////////////////////////////////////
-
+const collection = db.collection(MONGO_TEST_COLLECTION);
 
 let redisport = process.env.REDISPORT;
 let redishost = process.env.REDISHOST;
@@ -52,10 +34,6 @@ var pub = new Redis({
     host: redishost,
     password: redispassword
 })
-
-
-
-
 
 ///////////////////////////////////////////////////////////////////////
 //////////////////   register events being monitored    //////////////
