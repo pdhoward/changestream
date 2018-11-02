@@ -91,7 +91,7 @@ const register = () => {
       if (num > 1) interval.off('ping')
     })
 
-    console.log(r(`COGNITIVE CONTENT - TAXONOMY IN MOTION`))
+    console.log(r(`COGNITIVE CONTENT - DATA IN MOTION`))
     //console.log(queryLists)
     
     Object.keys(queryLists).forEach(key => {
@@ -115,7 +115,8 @@ const register = () => {
       })
 
     })
-
+    // COMPILE THE CBM AND EMPLOY
+    // parse text based on matching algorithm
     redis.on('message', function (channel, message) {
       const obj = cbm.reduce((acc, component) => {
         const action = component.action
@@ -130,18 +131,9 @@ const register = () => {
         return acc.concat(arr)
         
       }, [])
-        /*
-        return {
-          ...acc,
-          [action]: arr
-        }
-      }, {})
-      */
+       
       console.log(r(`CBM Test for ${message}`))
       console.log(obj)
-      //var merge = (a, b, p) => a.filter( aa => ! b.find ( bb => aa[p] === bb[p]) ).concat(b);
-      // a and b are 2 arrays, p is a property value submitted for merge/match between
-      // 2 arrays
 
 
     })
@@ -159,111 +151,7 @@ const publish = (channel, message) => {
   pub.publish(channel, message);
 }
 
-// updates existing db record 
-// for first time posts -- REFACTOR --- ADD CODE TO update db
-
-const isChange = (obj) => {
-      
-      const posts = db.collection('posts');
-      
-      return new Promise ((resolve, reject) => {
-
-        if (obj.sys.revision == 1) {
-          console.log(`This is new - revision is ${obj.sys.revision}`)
-          resolve(false)
-          return
-        }
-
-        // EXPERIMENTAL -- diff of 2 objects
-
-        posts.findOne({id: obj.sys.id})
-          .then((doc) => {
-            let differences = diff(obj, doc)
-            console.log(b(`-----------${obj.sys.id}-----------`))
-            console.log(differences)
-          })
-
-        posts.findOneAndUpdate({ id: obj.sys.id }, { $set: { obj: obj } }, options)
-              .then((doc) => {
-                console.log(doc);
-                resolve(true)
-              })
-              .catch((err) => {
-                console.log("Something wrong when updating data!");
-                reject(false)
-              })
-            })
-      }
-
 module.exports = {
-  events,
-  isChange,
+  events,  
   publish
 }
-   
-/*
-
-db.on('open', ()  => {
-      console.log("Connected correctly to server");
-      // specify db and collections
-      //const db = client.db("superheroesdb");
-      const collection = db.collection("superheroes");
-
-      const changeStream = collection.watch(pipeline);
-      // start listen to changes
-      changeStream.on("change", function (change) {
-        console.log("Super Hero Change Log")
-        console.log(change);
-      });
-
-      // insert few data with timeout so that we can watch it happening
-      setTimeout(function () {
-        collection.insertOne({ "batman": "bruce wayne" }, function (err) {
-          assert.ifError(err);
-        });
-      }, 1000);
-
-      setTimeout(function () {
-        collection.insertOne({ "superman": "clark kent" }, function (err) {
-          assert.ifError(err);
-        });
-      }, 2000);
-
-      setTimeout(function () {
-        collection.insertOne({ "wonder-woman": "diana prince" }, function (err) {
-          assert.ifError(err);
-        });
-      }, 3000);
-
-      setTimeout(function () {
-        collection.insertOne({ "ironman": "tony stark" }, function (err) {
-          assert.ifError(err);
-        });
-      }, 4000);
-
-      setTimeout(function () {
-        collection.insertOne({ "spiderman": "peter parker" }, function (err) {
-          assert.ifError(err);
-        });
-      }, 5000);
-
-      // update existing document
-      setTimeout(function () {
-        collection.updateOne({ "ironman": "tony stark" }, { $set: { "ironman": "elon musk" } }, function (err) {
-          assert.ifError(err);
-        });
-      }, 6000);
-
-      // delete existing document
-      setTimeout(function () {
-        collection.deleteOne({ "spiderman": "peter parker" }, function (err) {
-          assert.ifError(err);
-        });
-      }, 7000);
-
-})
-  .catch(err => {
-    console.error(err);
-  });
-*/
-
