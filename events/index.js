@@ -17,7 +17,7 @@ const channel = 'tasks';
 ////////////////// streaming server & db server ///////////////
 ///////////////////////////////////////////////////////////////
 
-const collection = db.collection(MONGO_TEST_COLLECTION);
+const collection = db.collection(process.env.MONGO_TEST_COLLECTION);
 
 let redisport = process.env.REDISPORT;
 let redishost = process.env.REDISHOST;
