@@ -1,15 +1,19 @@
 
-const plugin = {
+exports.plugin = {
 words: {
-    't rex': 'Dinosaur',
-    'pangaea': 'Noun',
-    'tethys sea': 'Noun'
+    'id': 'Search',
+    'title': 'Search',
+    'author': 'Search',
+    'price': 'Search',
+    'path': 'Search',
+    'thumbnail': 'Search',
+    'category': 'Search'
 },
 tags: {
-    Dinosaur: {
-    isA: 'Animal'
+    Search: {
+    isA: 'Knowledge'
     },
-    Animal: {
+    Knowledge: {
     isA: 'Noun'
     }
 },

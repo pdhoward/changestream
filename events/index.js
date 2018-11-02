@@ -8,7 +8,8 @@ const ss =                      require('string-similarity');
 const db =                      require('../db')
 const interval =                require('../functions/interval')
 const {queryLists, listen} =    require('../functions/listen')
-const {cbm} =                   require('../data/cbm/bookstore.js')
+const {cbm} =                   require('../data/cbm/bookstore')
+const {plugin} =                require('../data/plugin')
 const { g, b, gr, r, y } =      require('../console');
 
 const channel = 'tasks';
@@ -61,9 +62,12 @@ const register = () => {
 
       nlp.plugin(plugin);
       //now nlp will act properly-
-      let doc = nlp('i saw a huge T-Rex and a velociraptor');
+      let doc = nlp(message);
       //return these new tagged-results.
-      console.log(doc.match('#Animal+').out('array'))
+      console.log(y('NLP Plugin Test'))
+      console.log(doc.match('#Knowledge+').out('array'))
+      console.log(y('---------'))
+      console.log(doc.match('#Search').out('array'))
 
       collection.insertOne({ channel: channel, message: message }, function (err) {
         assert.ifError(err);
