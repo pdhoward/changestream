@@ -82,20 +82,25 @@ const register = () => {
       console.log(`db connection is a success`)
      
     });
-/*
+
+    /////////
+
     interval.once('ping', () => console.log(g('The Pinging Begins')))
     interval.on('ping', num => {
       console.log(gr(`ping #${num} from module}`))
-      if (num > 4) interval.off('ping')
+      if (num > 1) interval.off('ping')
     })
-    console.log(r(`NEW INVENTION FOR CONVERSATIONAL COMMERCE`))
+
+    console.log(r(`COGNITIVE CONTENT - TAXONOMY IN MOTION`))
     //console.log(queryLists)
     Object.keys(queryLists).forEach(key => {
       setInterval(() => {
         queryLists[key].emit(key, `I am ${key}`);
       }, 3000);
     })
-*/
+
+    /////////
+
     redis.on('message', function (channel, message) {
       console.log(g(`Received ${message} from ${channel}`));
       Object.keys(queryLists).forEach(key => {
