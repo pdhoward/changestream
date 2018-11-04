@@ -5,12 +5,17 @@
 /////      dark sky  ///////////
 ///////////////////////////////
 
-const getApiAndEmit = async socket => {
+const { EventEmitter } = require('eventemitter3')
+const fetch =            require('node-fetch')
+
+const dark = new EventEmitter();
+
+const getDarkWeather = async () => {
   try {
-    const res = await axios.get(
-      "https://api.darksky.net/forecast/PUT_YOUR_API_KEY_HERE/43.7695,11.2558"
+    const res = await fetch(
+      "https://api.darksky.net/forecast/process.env.DARKSKY_SECRET/43.7695,11.2558"
     );
-    socket.emit("FromAPI", res.data.currently.temperature);
+    dark.emit("FromAPI", res.data.currently.temperature);
   } catch (error) {
     console.error(`Error: ${error.code}`);
   }
