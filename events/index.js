@@ -9,6 +9,7 @@ const ss =                      require('string-similarity');
 const db =                      require('../db')
 const interval =                require('../functions/interval')
 const {queryLists, listen} =    require('../functions/listen')
+const {getDarkWeather, dark } = require('../functions/weather')
 const {cbm} =                   require('../data/cbm/bookstore')
 const WithTime =                require('../functions/time')
 const {plugin} =                require('../data/plugin')
@@ -112,11 +113,22 @@ const register = () => {
         }
         else {
           console.log(`Metadata ${key} not detected in ${message}`)
-        }
-        
+        }        
       })
-
     })
+
+    // fetch the weather on request and send back to client
+      redis.on('message', function (channel, message) {
+        if (message.includes('weather')) {
+          dark.on('darkWeather', (obj) => {
+            publish('music', `The weather is ${obj}`)
+          })
+          getDarkWeather()
+        }
+      })
+      
+    
+
     // COMPILE THE CBM AND EMPLOY
     // parse text based on matching algorithm
     redis.on('message', function (channel, message) {
