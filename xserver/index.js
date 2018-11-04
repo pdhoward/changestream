@@ -57,6 +57,11 @@ if (!isDev) {
 
 const server = require('../events').events(app)
 
+//  experiment with publish function - send msg to client
+let sendMessage = require('../events').publish
+sendMessage('music', 'Great up - time to rock and roll')
+
+
 ///////////////////////////////////////////////////////////////////////
 /////////////////// messaging alert for platform errors ///////////////
 //////////////////////////////////////////////////////////////////////
@@ -153,7 +158,7 @@ redis.on('message', function (channel, message) {
 const port = process.env.VCAP_APP_PORT || process.env.PORT
 
 server.listen(port, () => {
-    console.log(`listening on port ${port}`)
+    console.log(`listening on port ${port}`)    
   })
 
 
