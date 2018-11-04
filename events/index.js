@@ -46,7 +46,7 @@ const register = () => {
 
     console.log("REGISTERING ALL THE EVENTS")
 
-    redis.subscribe('news', 'music', 'chat', function (err, count) {       
+    redis.subscribe('news', 'chat', function (err, count) {
         console.log(`Currently tracking ${count} channels`)
     });
 
@@ -118,6 +118,7 @@ const register = () => {
     })
 
     // fetch the weather on request and send back to client
+    // note registered event is listening for message on chat channel
       redis.on('message', function (channel, message) {
         if (message.includes('weather')) {
           dark.on('darkWeather', (obj) => {
