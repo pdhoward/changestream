@@ -59,7 +59,7 @@ const server = require('../events').events(app)
 
 //  experiment with publish function - send msg to client
 let sendMessage = require('../events').publish
-sendMessage('music', 'Great up - time to rock and roll')
+sendMessage('music', 'Great time to rock and roll')
 
 
 ///////////////////////////////////////////////////////////////////////
