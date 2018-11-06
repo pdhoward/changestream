@@ -14,6 +14,8 @@ const getDarkWeather = async () => {
   try {
     const res = await fetch( api )
     const json = await res.json() 
+    console.log("-------------------dark weather --------------")
+    console.log(json)
     dark.emit("darkWeather", json.daily.summmary)
   } catch (error) {
     console.error(`Error: ${error.code}`);
