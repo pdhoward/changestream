@@ -13,10 +13,8 @@ const api = "https://api.darksky.net/forecast/" + secret + "/43.7695,11.2558"
 const getDarkWeather = async () => {
   try {
     const res = await fetch( api )
-    const json = await res.json() 
-    console.log("-------------------dark weather --------------")
-    console.log(json)
-    dark.emit("darkWeather", json.daily.summmary)
+    const json = await res.json()     
+    dark.emit("darkWeather", json.daily.summary)
   } catch (error) {
     console.error(`Error: ${error.code}`);
   }
