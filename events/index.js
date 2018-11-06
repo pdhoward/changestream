@@ -39,6 +39,8 @@ var pub = new Redis({
     password: redispassword
 })
 
+let msgObj
+let message
 ///////////////////////////////////////////////////////////////////////
 //////////////////   register events being monitored    //////////////
 //////////////////////////////////////////////////////////////////////
@@ -50,7 +52,11 @@ const register = () => {
         console.log(`Currently tracking ${count} channels`)
     });
 
-    redis.on('message', function (channel, message) {
+    redis.on('message', function (channel, msg) {
+
+      msgObj = JSON.parse(msg)
+      message = msgObj.Body      
+      
       console.log(`Received ${message} from ${channel}`);
       console.log(g("----------compromise test ---------"))    
       
@@ -105,7 +111,11 @@ const register = () => {
 
     /////////
 
-    redis.on('message', function (channel, message) {
+    redis.on('message', function (channel, msg) {
+
+      msgObj = JSON.parse(msg)
+      message = msgObj.Body     
+      
       console.log(g(`Received ${message} from ${channel}`));
       Object.keys(queryLists).forEach(key => {
         if (message.includes(key)) {
@@ -119,7 +129,11 @@ const register = () => {
 
     // fetch the weather on request and send back to client
     // note registered event is listening for message on chat channel
-      redis.on('message', function (channel, message) {
+      redis.on('message', function (channel, msg) {
+
+        msgObj = JSON.parse(msg)
+        message = msgObj.Body
+
         if (message.includes('weather')) {
           dark.on('darkWeather', (obj) => {
             publish('music', `The weather is ${obj}`)
@@ -132,7 +146,11 @@ const register = () => {
 
     // COMPILE THE CBM AND EMPLOY
     // parse text based on matching algorithm
-    redis.on('message', function (channel, message) {
+    redis.on('message', function (channel, msg) {
+
+      msgObj = JSON.parse(msg)
+      message = msgObj.Body
+      
       const obj = cbm.reduce((acc, component) => {
         const action = component.action
         let score = ss.findBestMatch(message, component.triggers )
